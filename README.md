@@ -1,27 +1,19 @@
-# FileUploader
+This project is for demonstartion of deploying angular webapp on serverless platform(AWS for now)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.8.
+Following steps are followed to create this app.
 
-## Development server
+Step1: npm install -g serverless
+Step2: serverless config credentials --provider aws --key YOUR_PUBLIC_KEY --secret YOUR_SECRET_KEY
+Step3: ng new "file-uploader"
+step4: cd to project and write command ng add @ng-toolkit/serverless --provider aws
+step5: npm run build:serverless:deploy
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Notes:
+1. getting error related to webpack? replace webpack-cli version in package.json with version 3.0.4
+2. getting error related to @types/nodes? replaced nodes key in tsconfig.json and tsconfig.app.json
 
-## Code scaffolding
+links:
+https://www.npmjs.com/package/serverless
+https://github.com/maciejtreder/ng-toolkit/tree/master/schematics/serverless
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+All the credit goes to respective developers. :)
