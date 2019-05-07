@@ -1,43 +1,39 @@
 import { Injectable } from '@angular/core';
-import * as AWS from 'aws-sdk/global';
-// import * as AWS from 'aws-sdk';
-import * as S3 from 'aws-sdk/clients/s3';
-import * as SecretsManager from 'aws-sdk/clients/secretsmanager';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UploaderService {
+  private apiUrl:string = "YOUR_URL_HERE";
+  private base64textString:String="";
+  fileName: any;
 
-  constructor() { }
-
+  constructor(private http:HttpClient) { }
   uploadFile(file) {
-    const contentType = file.type;
-
-    // const bucket:S3 = new S3(
-    //       {
-    //           accessKeyId: AWS.config.credentials.accessKeyId,
-    //           secretAccessKey: AWS.config.credentials.secretAccessKey,
-    //           region: 'us-east-1'
-    //       }
-    //   );
-     const bucket = new S3();
-     // bucket.config.region='us-east-1';
-      const params = {
-          Bucket: 'bucketforimages',
-          Key: file.name,
-          Body: file,
-          ACL: 'public-read',
-          ContentType: contentType
-      };
-      bucket.upload(params, function (err, data) {
-          if (err) {
-              console.log('There was an error uploading your file: ', err);
-              return false;
-          }
-          console.log('Successfully uploaded file.', data);
-          return true;
-      });
+        if (file && file.size<=991128) {
+          var reader = new FileReader();
+          reader.onload =this._handleReaderLoaded.bind(this);
+          reader.readAsBinaryString(file);
+          this.fileName = file.name;
+        }else{
+          alert("Please select valid file");
+        }
     }
- 
+    _handleReaderLoaded(readerEvt) {
+       var binaryString = readerEvt.target.result;
+              this.base64textString= btoa(binaryString);
+              this.postData();
+      }
+      postData(){
+        let headers: HttpHeaders = new HttpHeaders();
+        headers.append("Content-Type","application/json");
+        let body = {
+            "file":this.base64textString,
+            "fileName":this.fileName
+        }
+        this.http.post(this.apiUrl,body,{'headers':headers}).subscribe((data)=>{
+          alert(JSON.stringify(data));
+        });
+      }
 }

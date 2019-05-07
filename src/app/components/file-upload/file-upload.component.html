@@ -1,9 +1,10 @@
 
-<h1> Upload your file to S3</h1>
+<div align="center"><h1> Upload your file to S3</h1>
 <br>
 <br>
-<label class="btn btn-default">
+<label >
   <input type="file" (change)="selectFile($event)">
 </label>
 <br>
-<button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">Upload</button>
+<button  [disabled]="!selectedFiles" (click)="upload()" style="margin-top:20px">Upload</button>
+</div>
